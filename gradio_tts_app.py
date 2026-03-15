@@ -1,6 +1,7 @@
 import random
 import numpy as np
 import torch
+import os
 import gradio as gr
 from chatterbox.tts import ChatterboxTTS
 
@@ -73,8 +74,14 @@ with gr.Blocks() as demo:
         outputs=audio_output,
     )
 
+
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))
+
     demo.queue(
         max_size=50,
         default_concurrency_limit=1,
-    ).launch(share=True)
+    ).launch(
+        server_name="0.0.0.0",
+        server_port=port
+    )
